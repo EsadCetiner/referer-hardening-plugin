@@ -2,7 +2,7 @@
 
 ## Description
 
-This plugin introduces stricter validation of the `Referer` HTTP header in compliance with the relevant RFC specifications.__
+This plugin introduces stricter validation of the `Referer` HTTP header in compliance with the relevant RFC specifications.
 
 The plugin performs two main tasks:
 
