@@ -1,0 +1,23 @@
+---
+meta:
+  author: "azurit"
+  description: "Referer Hardening Plugin"
+rule_id: 9524120
+tests:
+  - test_id: 1
+    desc: "Check for fragment component"
+    stages:
+      - input:
+          dest_addr: "127.0.0.1"
+          method: "GET"
+          port: 80
+          headers:
+            Host: "localhost"
+            User-Agent: "OWASP CRS test agent"
+            Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+            Referer: "http://example.com#Fragment component"
+          uri: "/get"
+          version: "HTTP/1.1"
+        output:
+          log:
+            expect_ids: [9524120]
