@@ -2,22 +2,23 @@
 meta:
   author: "azurit"
   description: "Referer Hardening Plugin"
-rule_id: 9524120
+  enabled: true
+  name: 9524120.yaml
 tests:
-  - test_id: 1
-    desc: "Check for fragment component"
+  - test_title: 9524120-1
+    desc: "Ivalid Referer header"
     stages:
-      - input:
-          dest_addr: "127.0.0.1"
-          method: "GET"
-          port: 80
-          headers:
-            Host: "localhost"
-            User-Agent: "OWASP CRS test agent"
-            Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
-            Referer: "http://example.com#Fragment component"
-          uri: "/get"
-          version: "HTTP/1.1"
-        output:
-          log:
-            expect_ids: [9524120]
+      - stage:
+          input:
+            dest_addr: 127.0.0.1
+            headers:
+              Host: localhost
+              User-Agent: OWASP CRS test agent
+              Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+              Referer: "http://example.com#Fragment component"
+            port: 80
+            method: "GET"
+            uri: "/get"
+            version: "HTTP/1.1"
+          output:
+            log_contains: id "9524120"
