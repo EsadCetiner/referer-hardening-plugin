@@ -3,10 +3,10 @@ meta:
   author: "azurit"
   description: "Referer Hardening Plugin"
   enabled: true
-  name: 9524110.yaml
+  name: 9524190.yaml
 tests:
-  - test_title: 9524110-1
-    desc: "Invalid Referer header"
+  - test_title: 9524190-1
+    desc: "Valid port"
     stages:
       - stage:
           input:
@@ -15,15 +15,15 @@ tests:
               Host: localhost
               User-Agent: OWASP CRS test agent
               Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
-              Referer: "This is invalid header"
+              Referer: "http://example.com:80"
             port: 80
             method: "GET"
             uri: "/get"
             version: "HTTP/1.1"
           output:
-            log_contains: id "9524110"
-  - test_title: 9524110-2
-    desc: "Empty referer is whitelisted for this rule"
+            no_log_contains: id "9524190"
+  - test_title: 9524190-2
+    desc: "Missing port"
     stages:
       - stage:
           input:
@@ -32,10 +32,27 @@ tests:
               Host: localhost
               User-Agent: OWASP CRS test agent
               Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
-              Referer: ""
+              Referer: "http://example.com"
             port: 80
             method: "GET"
             uri: "/get"
             version: "HTTP/1.1"
           output:
-            no_log_contains: id "9524110"
+            no_log_contains: id "9524190"
+  - test_title: 9524190-3
+    desc: "Invalid port"
+    stages:
+      - stage:
+          input:
+            dest_addr: 127.0.0.1
+            headers:
+              Host: localhost
+              User-Agent: OWASP CRS test agent
+              Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+              Referer: "http://example.com:65536"
+            port: 80
+            method: "GET"
+            uri: "/get"
+            version: "HTTP/1.1"
+          output:
+            log_contains: id "9524190"
