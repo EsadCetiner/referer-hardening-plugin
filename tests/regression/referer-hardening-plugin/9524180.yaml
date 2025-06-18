@@ -1,0 +1,58 @@
+---
+meta:
+  author: "azurit"
+  description: "Referer Hardening Plugin"
+  enabled: true
+  name: 9524180.yaml
+tests:
+  - test_title: 9524120-1
+    desc: "Valid port"
+    stages:
+      - stage:
+          input:
+            dest_addr: 127.0.0.1
+            headers:
+              Host: localhost
+              User-Agent: OWASP CRS test agent
+              Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+              Referer: "http://example.com:80"
+            port: 80
+            method: "GET"
+            uri: "/get"
+            version: "HTTP/1.1"
+          output:
+            no_log_contains: id "9524180"
+  - test_title: 9524120-2
+    desc: "Missing port"
+    stages:
+      - stage:
+          input:
+            dest_addr: 127.0.0.1
+            headers:
+              Host: localhost
+              User-Agent: OWASP CRS test agent
+              Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+              Referer: "http://example.com"
+            port: 80
+            method: "GET"
+            uri: "/get"
+            version: "HTTP/1.1"
+          output:
+            no_log_contains: id "9524180"
+  - test_title: 9524180-3
+    desc: "Invalid port"
+    stages:
+      - stage:
+          input:
+            dest_addr: 127.0.0.1
+            headers:
+              Host: localhost
+              User-Agent: OWASP CRS test agent
+              Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+              Referer: "http://example.com:abc"
+            port: 80
+            method: "GET"
+            uri: "/get"
+            version: "HTTP/1.1"
+          output:
+            log_contains: id "9524180"
