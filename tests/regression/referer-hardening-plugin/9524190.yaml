@@ -49,7 +49,7 @@ tests:
               Host: localhost
               User-Agent: OWASP CRS test agent
               Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
-              Referer: "http://example.com:65535"
+              Referer: "http://example.com:65536"
             port: 80
             method: "GET"
             uri: "/get"
