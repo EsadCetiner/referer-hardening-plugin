@@ -6,7 +6,7 @@ meta:
   name: 9524120.yaml
 tests:
   - test_title: 9524120-1
-    desc: "Invalid Referer header"
+    desc: "Fragment component"
     stages:
       - stage:
           input:
@@ -22,3 +22,20 @@ tests:
             version: "HTTP/1.1"
           output:
             log_contains: id "9524120"
+  - test_title: 9524120-2
+    desc: "Missing fragment component"
+    stages:
+      - stage:
+          input:
+            dest_addr: 127.0.0.1
+            headers:
+              Host: localhost
+              User-Agent: OWASP CRS test agent
+              Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+              Referer: "http://example.com"
+            port: 80
+            method: "GET"
+            uri: "/get"
+            version: "HTTP/1.1"
+          output:
+            no_log_contains: id "9524120"
