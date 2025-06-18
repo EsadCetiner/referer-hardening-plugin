@@ -3,7 +3,7 @@ meta:
   author: "azurit"
   description: "Referer Hardening Plugin"
   enabled: true
-  name: 9524120.yaml
+  name: 9524170.yaml
 tests:
   - test_title: 9524170-1
     desc: "Valid domain"
