@@ -6,7 +6,7 @@ meta:
   name: 9524120.yaml
 tests:
   - test_title: 9524120-1
-    desc: "Ivalid Referer header"
+    desc: "Invalid Referer header"
     stages:
       - stage:
           input:
